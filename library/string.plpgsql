@@ -1,0 +1,24 @@
+
+
+CREATE OR REPLACE FUNCTION uv_str_reverse(
+  p_src text
+) RETURNS text AS $$
+DECLARE
+  p_length int;
+  w_result text = '';
+BEGIN
+  IF p_src IS NULL THEN
+    RETURN p_src;
+  END IF;
+  
+  p_length := length(p_src);
+  IF 2 > p_length THEN
+    RETURN p_src;
+  END IF;
+  
+  FOR i IN REVERSE p_length..1 LOOP
+    w_result := w_result || substr(p_src, i, 1);
+  END LOOP;
+  RETURN w_result;
+END;
+$$ LANGUAGE plpgsql;
